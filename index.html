@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Yilu Bundle Opener</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    * {
+      background-color: #f7f9fd;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      max-width: 375px;
+      margin: auto;
+    }
+
+    .field {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input {
+      font-size: 16px;
+      border: 1px solid #463760;
+    }
+
+    .label {
+      font-size: 18px;
+      font-weight: 'bold';
+      color: #000;
+    }
+
+    .description {
+      font-size: 16px;
+      color: #463760;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Barlow" rel="stylesheet">
+</head>
+<body>
+  <form id="app" class="container" @submit="handleSubmit" novalidate>
+      <h1>Yilu Bundle Opener</h1>
+
+      <div class="field">
+        <label class="label" for="">Origin Iata Code</label>
+        <input class="input" type="text" v-model="originIata">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Destination Iata Code</label>
+        <input class="input" type="text" v-model="destinationIata">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Time of departure from origin airport</label>
+        <input class="input" type="dateTime-local" v-model="computedTime">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Arrival Time</label>
+        <input class="input" type="dateTime-local" v-model="computedTime">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Locale</label>
+        <select id="locale-select" v-model="locale">
+            <option value="">--Please choose an option--</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Transport</label>
+        <select id="transport-select" v-model="type">
+            <option value="">--Please choose an option--</option>
+            <option value="BUS">Bus</option>
+            <option value="TAXI">Taxi</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Assets Path</label>
+        <input class="input" type="text" v-model="assetsPath">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Render Root ID</label>
+        <input class="input" type="text" v-model="renderRootId">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Modal Root ID</label>
+        <input class="input" type="text" v-model="modalRootId">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Token</label>
+        <input class="input" type="text" v-model="token">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Completed Bookings</label>
+        <select id="booking-select" v-model="hasCompletedBookings">
+            <option value="">--Please choose an option--</option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="label" for="">User ID</label>
+        <input class="input" type="text" v-model="userId">
+      </div>
+      
+      <div class="field">
+        <label class="label" for="">Context ID</label>
+        <input class="input" type="text" v-model="contextId">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Google Maps API Key</label>
+        <input class="input" type="text" v-model="googleMapsApiKey">
+      </div>
+
+      <div class="field">
+        <label class="label" for="">Direction</label>
+        <select id="direction-select" v-model="direction">
+            <option value="">--Please choose an option--</option>
+            <option value="FROM_AIRPORT">From the airport</option>
+            <option value="TO_AIRPORT">To the airport</option>
+        </select>
+      </div>
+
+      <button type="submit">Open bundle</button>
+    </form>
+  <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          originIata: 'STR',
+          destinationIata: 'CGN',
+          outboundDepartureTime: new Date(),
+          outboundArrivalTime: new Date(),
+          locale: 'en',
+          type: 'BUS',
+          assetsPath: '/',
+          renderRootId: 'root',
+          modalRootId: 'modal',
+          token: '2037bb3f-5973-4afe-a9ae-343168b3d776',
+          hasCompletedBookings: 'false',
+          userId: 'user-id',
+          contextId: 'context-id',
+          googleMapsApiKey: 'AIzaSyCohMQDYmuaE6FJG4ggtsU3jlzg8g00908',
+          direction: 'FROM_AIRPORT'
+          },
+        methods: {
+          humanizeURL: function (url) {
+            return url
+              .replace(/^https?:\/\//, '')
+              .replace(/\/$/, '')
+          },
+          toISO: function (dateTime) {
+            console.log(dateTime);
+              ten = function (i) {
+                return (i < 10 ? '0' : '') + i;
+              },
+              YYYY = dateTime.getFullYear(),
+              MM = ten(dateTime.getMonth() + 1),
+              DD = ten(dateTime.getDate()),
+              HH = ten(dateTime.getHours()),
+              II = ten(dateTime.getMinutes()),
+              SS = ten(dateTime.getSeconds())
+            ;
+            return YYYY + '-' + MM + '-' + DD + 'T' +
+                    HH + ':' + II + ':' + SS;
+          },
+          handleSubmit: function (event) {
+          event.preventDefault();
+
+          const params = {
+	          originIata: this.originIata,
+	          destinationIata: this.destinationIata,
+	          outboundDepartureTime: this.outboundDepartureTime.toISOString(),
+	          outboundArrivalTime: this.outboundArrivalTime.toISOString(),
+	          passengers: this.passengers,
+	          locale: this.locale,
+	          type: this.type,
+	          assetsPath: this.assetsPath,
+	          renderRootId: this.renderRootId,
+	          modalRootId: this.modalRootId,
+	          token: this.token,
+	          hasCompletedBookings: this.hasCompletedBookings,
+	          userId: this.userId,
+	          contextId: this.contextId,
+	          googleMapsApiKey: this.googleMapsApiKey,
+	          direction: this.direction,
+	          passengers: [{
+	          	firstName: 'Calum',
+	          	lastName: 'O Driscol'
+	          }]
+          }
+          console.log(params);
+          const url = `https://ew.web-sdk.staging.yiluhub.com/?${this.serialize(params)}`
+          window.open(url);
+          },
+          serialize: function(obj, prefix) {
+            var str = [],
+              p;
+            for (p in obj) {
+              if (obj.hasOwnProperty(p)) {
+                var k = prefix ? prefix + "[" + p + "]" : p,
+                  v = obj[p];
+                str.push((v !== null && typeof v === "object") ?
+                  this.serialize(v, k) :
+                  encodeURIComponent(k) + "=" + encodeURIComponent(v));
+              }
+            }
+            return str.join("&");
+          }
+        },
+        computed: {
+          computedTime: {
+            get() {
+              //this function will determine what is displayed in the input
+              return (this.toISO(this.outboundDepartureTime));
+            },
+            set(newVal) {
+                //this function will run whenever the input changes
+                this.outboundDepartureTime = new Date(newVal).toISOString();
+            }
+          }
+        }
+      })
+    </script>
+</body>
+</html>
