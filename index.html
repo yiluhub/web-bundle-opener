@@ -97,11 +97,11 @@
       <div class="row">
         <div class="field">
           <label class="label" for="">Departure Time</label>
-          <input class="input" type="dateTime-local" v-model="computedTime">
+          <input class="input" type="dateTime-local" v-model="computedOutboundDepartureTime">
         </div>
         <div class="field">
           <label class="label" for="">Arrival Time</label>
-          <input class="input" type="dateTime-local" v-model="computedTime">
+          <input class="input" type="dateTime-local" v-model="computedOutboundArrivalTime">
         </div>
       </div>
 
@@ -230,9 +230,9 @@
           userId: 'user-id',
           contextId: 'context-id',
           googleMapsApiKey: 'AIzaSyCohMQDYmuaE6FJG4ggtsU3jlzg8g00908',
-          direction: 'FROM_AIRPORT',
+          direction: 'TO_AIRPORT',
           memoryRouting: 'false',
-          trackingAllowed: 'true',
+          trackingAllowed: 'false',
           bundleAddress: 'https://ew.web-sdk.staging.yiluhub.com'
         },
         methods: {
@@ -242,6 +242,7 @@
               .replace(/\/$/, '')
           },
           toISO: function (dateTime) {
+
               ten = function (i) {
                 return (i < 10 ? '0' : '') + i;
               },
@@ -313,14 +314,22 @@
           }
         },
         computed: {
-          computedTime: {
+          computedOutboundDepartureTime: {
             get() {
-              //this function will determine what is displayed in the input
-              return (this.toISO(this.outboundDepartureTime));
+              return this.toISO(this.outboundDepartureTime);
             },
             set(newVal) {
-                //this function will run whenever the input changes
-                this.outboundDepartureTime = new Date(newVal).toISOString();
+              this.outboundDepartureTime = new Date(newVal);
+            }
+          },
+          computedOutboundArrivalTime: {
+            get() {
+              //this function will determine what is displayed in the input
+              return this.toISO(this.outboundArrivalTime);
+            },
+            set(newVal) {
+              //this function will run whenever the input changes
+              this.outboundArrivalTime = new Date(newVal);
             }
           }
         }
