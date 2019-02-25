@@ -11,18 +11,34 @@
       font-family: 'Barlow', sans-serif;
     }
 
+    .title {
+      text-align: center;
+    }
+
     .container {
       display: flex;
       flex-direction: column;
       padding: 20px;
-      max-width: 375px;
+      max-width: 500px;
       margin: auto;
+    }
+
+    .row {
+      display: flex;
     }
 
     .field {
       margin-bottom: 20px;
       display: flex;
+      flex: 1;
       flex-direction: column;
+    }
+    .field:first-of-type {
+      margin-right: 10px;
+    }
+
+    .field:last-of-type {
+      margin-left: 10px;
     }
 
     .input {
@@ -42,108 +58,161 @@
       font-style: italic;
       margin-bottom: 10px;
     }
+
+    .button {
+      font-size: 18px;
+      margin-top: 15px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .link {
+      display: none;
+    }
+    .link--visible {
+      display: block;
+      margin: 20px 0;
+      font-size: 20px;
+      text-align: center;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Barlow" rel="stylesheet">
 </head>
 <body>
   <form id="app" class="container" @submit="handleSubmit" novalidate>
-      <h1>Yilu Bundle Opener</h1>
+      <h1 class="title">Yilu Web Bundle Opener</h1>
 
-      <div class="field">
-        <label class="label" for="">Origin Iata Code</label>
-        <input class="input" type="text" v-model="originIata">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Origin Iata Code</label>
+          <input class="input" type="text" v-model="originIata">
+        </div>
+        <div class="field">
+          <label class="label" for="">Destination Iata Code</label>
+          <input class="input" type="text" v-model="destinationIata">
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="">Destination Iata Code</label>
-        <input class="input" type="text" v-model="destinationIata">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Departure Time</label>
+          <input class="input" type="dateTime-local" v-model="computedTime">
+        </div>
+        <div class="field">
+          <label class="label" for="">Arrival Time</label>
+          <input class="input" type="dateTime-local" v-model="computedTime">
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="">Time of departure from origin airport</label>
-        <input class="input" type="dateTime-local" v-model="computedTime">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Arrival Time</label>
-        <input class="input" type="dateTime-local" v-model="computedTime">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Locale</label>
-        <select id="locale-select" v-model="locale">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Locale</label>
+          <select id="locale-select" v-model="locale">
             <option value="">--Please choose an option--</option>
             <option value="en">English</option>
             <option value="de">Deutsch</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Transport</label>
-        <select id="transport-select" v-model="type">
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="">Transport</label>
+          <select id="transport-select" v-model="type">
             <option value="">--Please choose an option--</option>
             <option value="BUS">Bus</option>
             <option value="TAXI">Taxi</option>
-        </select>
+          </select>
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="">Assets Path</label>
-        <input class="input" type="text" v-model="assetsPath">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Render Root ID</label>
-        <input class="input" type="text" v-model="renderRootId">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Modal Root ID</label>
-        <input class="input" type="text" v-model="modalRootId">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Token</label>
-        <input class="input" type="text" v-model="token">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Completed Bookings</label>
-        <select id="booking-select" v-model="hasCompletedBookings">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Assets Path</label>
+          <input class="input" type="text" v-model="assetsPath">
+        </div>
+        <div class="field">
+          <label class="label" for="">Memory Routing</label>
+          <select id="memory-routing-select" v-model="memoryRouting">
             <option value="">--Please choose an option--</option>
             <option value="false">No</option>
             <option value="true">Yes</option>
-        </select>
+          </select>
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="">User ID</label>
-        <input class="input" type="text" v-model="userId">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Render Root ID</label>
+          <input class="input" type="text" v-model="renderRootId">
+        </div>
+        <div class="field">
+          <label class="label" for="">Modal Root ID</label>
+          <input class="input" type="text" v-model="modalRootId">
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="">Context ID</label>
-        <input class="input" type="text" v-model="contextId">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Token</label>
+          <input class="input" type="text" v-model="token">
+        </div>
+        <div class="field">
+          <label class="label" for="">Google Maps API Key</label>
+          <input class="input" type="text" v-model="googleMapsApiKey">
+        </div>
       </div>
 
-      <div class="field">
-        <label class="label" for="">Google Maps API Key</label>
-        <input class="input" type="text" v-model="googleMapsApiKey">
-      </div>
-
-      <div class="field">
-        <label class="label" for="">Direction</label>
-        <select id="direction-select" v-model="direction">
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Direction</label>
+          <select id="direction-select" v-model="direction">
             <option value="">--Please choose an option--</option>
             <option value="FROM_AIRPORT">From the airport</option>
             <option value="TO_AIRPORT">To the airport</option>
-        </select>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="">Tracking Allowed</label>
+          <select id="tracking-allowed-select" v-model="trackingAllowed">
+            <option value="">--Please choose an option--</option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
       </div>
 
-      <button type="submit">Open bundle</button>
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Completed Bookings</label>
+          <select id="booking-select" v-model="hasCompletedBookings">
+            <option value="">--Please choose an option--</option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">User ID</label>
+          <input class="input" type="text" v-model="userId">
+        </div>
+        <div class="field">
+          <label class="label" for="">Context ID</label>
+          <input class="input" type="text" v-model="contextId">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label class="label" for="">Bundle Address</label>
+          <input class="input" type="text" v-model="bundleAddress">
+        </div>
+      </div>
+
+      <button class="button" type="submit">Create Link</button>
+      <a id="link" class="link" href="" target="_blank">Web Bundle Link</a>
     </form>
-  <script>
+    <script>
       var app = new Vue({
         el: '#app',
         data: {
@@ -161,8 +230,11 @@
           userId: 'user-id',
           contextId: 'context-id',
           googleMapsApiKey: 'AIzaSyCohMQDYmuaE6FJG4ggtsU3jlzg8g00908',
-          direction: 'FROM_AIRPORT'
-          },
+          direction: 'FROM_AIRPORT',
+          memoryRouting: 'false',
+          trackingAllowed: 'true',
+          bundleAddress: 'https://ew.web-sdk.staging.yiluhub.com'
+        },
         methods: {
           humanizeURL: function (url) {
             return url
@@ -184,47 +256,46 @@
                     HH + ':' + II + ':' + SS;
           },
           handleSubmit: function (event) {
-          event.preventDefault();
+            event.preventDefault();
 
-          const params = {
-	          originIata: this.originIata,
-	          destinationIata: this.destinationIata,
-	          outboundDepartureTime: this.outboundDepartureTime.toISOString(),
-	          outboundArrivalTime: this.outboundArrivalTime.toISOString(),
-	          passengers: this.passengers,
-	          locale: this.locale,
-	          type: this.type,
-	          assetsPath: this.assetsPath,
-	          renderRootId: this.renderRootId,
-	          modalRootId: this.modalRootId,
-	          token: this.token,
-	          hasCompletedBookings: this.hasCompletedBookings,
-	          userId: this.userId,
-	          contextId: this.contextId,
-	          googleMapsApiKey: this.googleMapsApiKey,
-	          direction: this.direction,
-	          passengers: [{
-	          	firstName: 'Calum',
-	          	lastName: 'O Driscol'
-	          }]
-          }
-          console.log(params);
+            const params = {
+              originIata: this.originIata,
+              destinationIata: this.destinationIata,
+              outboundDepartureTime: this.outboundDepartureTime.toISOString(),
+              outboundArrivalTime: this.outboundArrivalTime.toISOString(),
+              locale: this.locale,
+              type: this.type,
+              assetsPath: this.assetsPath,
+              renderRootId: this.renderRootId,
+              modalRootId: this.modalRootId,
+              token: this.token,
+              hasCompletedBookings: this.hasCompletedBookings,
+              userId: this.userId,
+              contextId: this.contextId,
+              googleMapsApiKey: this.googleMapsApiKey,
+              direction: this.direction,
+              memoryRouting: this.memoryRouting,
+              trackingAllowed: this.trackingAllowed
+            }
+            console.log(params);
 
-          const config = {
-            // NOTE: default config for the hosted web bundle, e.g. http://localhost:5000
-            bundle_address: 'https://ew.web-sdk.staging.yiluhub.com'
-          };
+            const config = {
+              // NOTE: default config for the hosted web bundle, e.g. http://localhost:5000
+              bundle_address: this.bundleAddress
+            };
 
-          const queryString = window.location.search.substr(1);
-          const queryChunks = queryString.length > 1 ? queryString.split('&') : []
-          queryChunks.forEach(chunk => {
-            const [key, value] = chunk.split('=');
-            config[key] = value;
-          });
+            const queryString = window.location.search.substr(1);
+            const queryChunks = queryString.length > 1 ? queryString.split('&') : []
+            queryChunks.forEach(chunk => {
+              const [key, value] = chunk.split('=');
+              config[key] = value;
+            });
 
-          const url = `${config.bundle_address}/?${this.serialize(params)}`
+            const url = `${config.bundle_address}/?${this.serialize(params)}`;
 
-          window.open(url);
+            var linkElement = document.getElementById('link');
+            linkElement.className = 'link--visible';
+            linkElement.href = url;
           },
           serialize: function(obj, prefix) {
             var str = [],
