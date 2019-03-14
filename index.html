@@ -176,6 +176,7 @@
             <option value="">--Please choose an option--</option>
             <option value="false">No</option>
             <option value="true">Yes</option>
+            <option value="">Unknown</option>
           </select>
         </div>
       </div>
@@ -213,6 +214,17 @@
       <a id="link" class="link" href="" target="_blank">Web Bundle Link</a>
     </form>
     <script>
+      const config = {
+        // NOTE: default config for the hosted web bundle, e.g. http://localhost:5000
+        bundle_address: 'https://ew.web-sdk.staging.yiluhub.com'
+      };
+      const queryString = window.location.search.substr(1);
+      const queryChunks = queryString.length > 1 ? queryString.split('&') : []
+      queryChunks.forEach(chunk => {
+        const [key, value] = chunk.split('=');
+        config[key] = value;
+      });
+
       var app = new Vue({
         el: '#app',
         data: {
@@ -233,7 +245,7 @@
           direction: 'TO_AIRPORT',
           memoryRouting: 'false',
           trackingAllowed: 'false',
-          bundleAddress: 'https://ew.web-sdk.staging.yiluhub.com'
+          bundleAddress: config.bundle_address
         },
         methods: {
           humanizeURL: function (url) {
@@ -280,18 +292,6 @@
             }
             console.log(params);
 
-            const config = {
-              // NOTE: default config for the hosted web bundle, e.g. http://localhost:5000
-              bundle_address: this.bundleAddress
-            };
-
-            const queryString = window.location.search.substr(1);
-            const queryChunks = queryString.length > 1 ? queryString.split('&') : []
-            queryChunks.forEach(chunk => {
-              const [key, value] = chunk.split('=');
-              config[key] = value;
-            });
-
             const url = `${config.bundle_address}/?${this.serialize(params)}`;
 
             var linkElement = document.getElementById('link');
@@ -299,6 +299,14 @@
             linkElement.href = url;
           },
           serialize: function(obj, prefix) {
+            // remove empty and unset key-values
+            Object.keys(obj).forEach(function(key) {
+              var value = obj[key];
+              if (value === null || value === '') {
+                delete obj[key]
+              }
+            })
+
             var str = [],
               p;
             for (p in obj) {
