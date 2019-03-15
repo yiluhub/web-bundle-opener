@@ -292,7 +292,7 @@
             }
             console.log(params);
 
-            const url = `${config.bundle_address}/?${this.serialize(params)}`;
+            const url = `${this.bundleAddress}/?${this.serialize(params)}`;
 
             var linkElement = document.getElementById('link');
             linkElement.className = 'link--visible';
