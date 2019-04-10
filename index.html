@@ -80,268 +80,277 @@
   <link href="https://fonts.googleapis.com/css?family=Barlow" rel="stylesheet">
 </head>
 <body>
-  <form id="app" class="container" @submit="handleSubmit" novalidate>
-      <h1 class="title">Yilu Web Bundle Opener</h1>
+<form id="app" class="container" @submit="handleSubmit" novalidate>
+  <h1 class="title">Yilu Web Bundle Opener</h1>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Origin Iata Code</label>
-          <input class="input" type="text" v-model="originIata">
-        </div>
-        <div class="field">
-          <label class="label" for="">Destination Iata Code</label>
-          <input class="input" type="text" v-model="destinationIata">
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Origin Iata Code</label>
+      <input class="input" type="text" v-model="originIata">
+    </div>
+    <div class="field">
+      <label class="label" for="">Destination Iata Code</label>
+      <input class="input" type="text" v-model="destinationIata">
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Departure Time</label>
-          <input class="input" type="dateTime-local" v-model="computedOutboundDepartureTime">
-        </div>
-        <div class="field">
-          <label class="label" for="">Arrival Time</label>
-          <input class="input" type="dateTime-local" v-model="computedOutboundArrivalTime">
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Departure Time</label>
+      <input class="input" type="dateTime-local" v-model="computedOutboundDepartureTime">
+    </div>
+    <div class="field">
+      <label class="label" for="">Arrival Time</label>
+      <input class="input" type="dateTime-local" v-model="computedOutboundArrivalTime">
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Locale</label>
-          <select id="locale-select" v-model="locale">
-            <option value="">--Please choose an option--</option>
-            <option value="en">English</option>
-            <option value="de">Deutsch</option>
-          </select>
-        </div>
-        <div class="field">
-          <label class="label" for="">Transport</label>
-          <select id="transport-select" v-model="type">
-            <option value="">--Please choose an option--</option>
-            <option value="BUS">Bus</option>
-            <option value="TAXI">Taxi</option>
-          </select>
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Locale</label>
+      <select id="locale-select" v-model="locale">
+        <option value="">--Please choose an option--</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="label" for="">Transport</label>
+      <select id="transport-select" v-model="type">
+        <option value="">--Please choose an option--</option>
+        <option value="BUS">Bus</option>
+        <option value="TAXI">Taxi</option>
+      </select>
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Assets Path</label>
-          <input class="input" type="text" v-model="assetsPath">
-        </div>
-        <div class="field">
-          <label class="label" for="">Memory Routing</label>
-          <select id="memory-routing-select" v-model="memoryRouting">
-            <option value="">--Please choose an option--</option>
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-          </select>
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Assets Path</label>
+      <input class="input" type="text" v-model="assetsPath">
+    </div>
+    <div class="field">
+      <label class="label" for="">Memory Routing</label>
+      <select id="memory-routing-select" v-model="memoryRouting">
+        <option value="">--Please choose an option--</option>
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Render Root ID</label>
-          <input class="input" type="text" v-model="renderRootId">
-        </div>
-        <div class="field">
-          <label class="label" for="">Modal Root ID</label>
-          <input class="input" type="text" v-model="modalRootId">
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Render Root ID</label>
+      <input class="input" type="text" v-model="renderRootId">
+    </div>
+    <div class="field">
+      <label class="label" for="">Modal Root ID</label>
+      <input class="input" type="text" v-model="modalRootId">
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Token</label>
-          <input class="input" type="text" v-model="token">
-        </div>
-        <div class="field">
-          <label class="label" for="">Google Maps API Key</label>
-          <input class="input" type="text" v-model="googleMapsApiKey">
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Token</label>
+      <input class="input" type="text" v-model="token">
+    </div>
+    <div class="field">
+      <label class="label" for="">Google Maps API Key</label>
+      <input class="input" type="text" v-model="googleMapsApiKey">
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Direction</label>
-          <select id="direction-select" v-model="direction">
-            <option value="">--Please choose an option--</option>
-            <option value="FROM_AIRPORT">From the airport</option>
-            <option value="TO_AIRPORT">To the airport</option>
-          </select>
-        </div>
-        <div class="field">
-          <label class="label" for="">Tracking Allowed</label>
-          <select id="tracking-allowed-select" v-model="trackingAllowed">
-            <option value="">--Please choose an option--</option>
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-            <option value="">Unknown</option>
-          </select>
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Direction</label>
+      <select id="direction-select" v-model="direction">
+        <option value="">--Please choose an option--</option>
+        <option value="FROM_AIRPORT">From the airport</option>
+        <option value="TO_AIRPORT">To the airport</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="label" for="">Tracking Allowed</label>
+      <select id="tracking-allowed-select" v-model="trackingAllowed">
+        <option value="">--Please choose an option--</option>
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+        <option value="">Unknown</option>
+      </select>
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Completed Bookings</label>
-          <select id="booking-select" v-model="hasCompletedBookings">
-            <option value="">--Please choose an option--</option>
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-          </select>
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Completed Bookings</label>
+      <select id="booking-select" v-model="hasCompletedBookings">
+        <option value="">--Please choose an option--</option>
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">User ID</label>
-          <input class="input" type="text" v-model="userId">
-        </div>
-        <div class="field">
-          <label class="label" for="">Context ID</label>
-          <input class="input" type="text" v-model="contextId">
-        </div>
-      </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">User ID</label>
+      <input class="input" type="text" v-model="userId">
+    </div>
+    <div class="field">
+      <label class="label" for="">Context ID</label>
+      <input class="input" type="text" v-model="contextId">
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Loyalty Program id</label>
+      <input class="input" type="text" v-model="loyaltyProgramId">
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="label" for="">Bundle Address</label>
-          <input class="input" type="text" v-model="bundleAddress">
-        </div>
-      </div>
 
-      <button class="button" type="submit">Create Link</button>
-      <a id="link" class="link" href="" target="_blank">Web Bundle Link</a>
-    </form>
-    <script>
-      const config = {
-        // NOTE: default config for the hosted web bundle, e.g. http://localhost:5000
-        bundle_address: 'https://ew.web-sdk.staging.yiluhub.com'
-      };
-      const queryString = window.location.search.substr(1);
-      const queryChunks = queryString.length > 1 ? queryString.split('&') : []
-      queryChunks.forEach(chunk => {
-        const [key, value] = chunk.split('=');
-        config[key] = value;
-      });
+  <div class="row">
+    <div class="field">
+      <label class="label" for="">Bundle Address</label>
+      <input class="input" type="text" v-model="bundleAddress">
+    </div>
+  </div>
 
-      var app = new Vue({
-        el: '#app',
-        data: {
-          originIata: 'STR',
-          destinationIata: 'CGN',
-          outboundDepartureTime: new Date(),
-          outboundArrivalTime: new Date(),
-          locale: 'en',
-          type: 'BUS',
-          assetsPath: '/',
-          renderRootId: 'root',
-          modalRootId: 'modal',
-          token: '300e3921-3c73-415a-8ba5-49d27619d435', // SimpleTrip (dev/staging)
-          hasCompletedBookings: 'false',
-          userId: 'user-id',
-          contextId: 'context-id',
-          googleMapsApiKey: 'AIzaSyCohMQDYmuaE6FJG4ggtsU3jlzg8g00908',
-          direction: 'TO_AIRPORT',
-          memoryRouting: 'false',
-          trackingAllowed: 'false',
-          bundleAddress: config.bundle_address
+  <button class="button" type="submit">Create Link</button>
+  <a id="link" class="link" href="" target="_blank">Web Bundle Link</a>
+</form>
+<script>
+  const config = {
+    // NOTE: default config for the hosted web bundle, e.g. http://localhost:5000
+    bundle_address: 'https://ew.web-sdk.staging.yiluhub.com'
+  };
+  const queryString = window.location.search.substr(1);
+  const queryChunks = queryString.length > 1 ? queryString.split('&') : []
+  queryChunks.forEach(chunk => {
+    const [key, value] = chunk.split('=');
+    config[key] = value;
+  });
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      originIata: 'STR',
+      destinationIata: 'CGN',
+      outboundDepartureTime: new Date(),
+      outboundArrivalTime: new Date(),
+      locale: 'en',
+      type: 'BUS',
+      assetsPath: '/',
+      renderRootId: 'root',
+      modalRootId: 'modal',
+      token: '300e3921-3c73-415a-8ba5-49d27619d435', // SimpleTrip (dev/staging)
+      hasCompletedBookings: 'false',
+      userId: 'user-id',
+      contextId: 'context-id',
+      googleMapsApiKey: 'AIzaSyCohMQDYmuaE6FJG4ggtsU3jlzg8g00908',
+      direction: 'TO_AIRPORT',
+      memoryRouting: 'false',
+      trackingAllowed: 'false',
+      bundleAddress: config.bundle_address,
+      loyaltyProgramId: 'boomerang-id'
+    },
+    methods: {
+      humanizeURL: function (url) {
+        return url
+                .replace(/^https?:\/\//, '')
+                .replace(/\/$/, '')
+      },
+      toISO: function (dateTime) {
+
+        ten = function (i) {
+          return (i < 10 ? '0' : '') + i;
         },
-        methods: {
-          humanizeURL: function (url) {
-            return url
-              .replace(/^https?:\/\//, '')
-              .replace(/\/$/, '')
-          },
-          toISO: function (dateTime) {
+                YYYY = dateTime.getFullYear(),
+                MM = ten(dateTime.getMonth() + 1),
+                DD = ten(dateTime.getDate()),
+                HH = ten(dateTime.getHours()),
+                II = ten(dateTime.getMinutes()),
+                SS = ten(dateTime.getSeconds())
+        ;
+        return YYYY + '-' + MM + '-' + DD + 'T' +
+                HH + ':' + II + ':' + SS;
+      },
+      handleSubmit: function (event) {
+        event.preventDefault();
 
-              ten = function (i) {
-                return (i < 10 ? '0' : '') + i;
-              },
-              YYYY = dateTime.getFullYear(),
-              MM = ten(dateTime.getMonth() + 1),
-              DD = ten(dateTime.getDate()),
-              HH = ten(dateTime.getHours()),
-              II = ten(dateTime.getMinutes()),
-              SS = ten(dateTime.getSeconds())
-            ;
-            return YYYY + '-' + MM + '-' + DD + 'T' +
-                    HH + ':' + II + ':' + SS;
-          },
-          handleSubmit: function (event) {
-            event.preventDefault();
+        const params = {
+          originIata: this.originIata,
+          destinationIata: this.destinationIata,
+          outboundDepartureTime: this.outboundDepartureTime.toISOString(),
+          outboundArrivalTime: this.outboundArrivalTime.toISOString(),
+          locale: this.locale,
+          type: this.type,
+          assetsPath: this.assetsPath,
+          renderRootId: this.renderRootId,
+          modalRootId: this.modalRootId,
+          token: this.token,
+          hasCompletedBookings: this.hasCompletedBookings,
+          userId: this.userId,
+          contextId: this.contextId,
+          googleMapsApiKey: this.googleMapsApiKey,
+          direction: this.direction,
+          memoryRouting: this.memoryRouting,
+          trackingAllowed: this.trackingAllowed,
+          loyaltyProgramId: this.loyaltyProgramId
+        }
+        console.log(params);
 
-            const params = {
-              originIata: this.originIata,
-              destinationIata: this.destinationIata,
-              outboundDepartureTime: this.outboundDepartureTime.toISOString(),
-              outboundArrivalTime: this.outboundArrivalTime.toISOString(),
-              locale: this.locale,
-              type: this.type,
-              assetsPath: this.assetsPath,
-              renderRootId: this.renderRootId,
-              modalRootId: this.modalRootId,
-              token: this.token,
-              hasCompletedBookings: this.hasCompletedBookings,
-              userId: this.userId,
-              contextId: this.contextId,
-              googleMapsApiKey: this.googleMapsApiKey,
-              direction: this.direction,
-              memoryRouting: this.memoryRouting,
-              trackingAllowed: this.trackingAllowed
-            }
-            console.log(params);
+        const url = `${this.bundleAddress}/?${this.serialize(params)}`;
 
-            const url = `${this.bundleAddress}/?${this.serialize(params)}`;
-
-            var linkElement = document.getElementById('link');
-            linkElement.className = 'link--visible';
-            linkElement.href = url;
-          },
-          serialize: function(obj, prefix) {
-            // remove empty and unset key-values
-            Object.keys(obj).forEach(function(key) {
-              var value = obj[key];
-              if (value === null || value === '') {
-                delete obj[key]
-              }
-            })
-
-            var str = [],
-              p;
-            for (p in obj) {
-              if (obj.hasOwnProperty(p)) {
-                var k = prefix ? prefix + "[" + p + "]" : p,
-                  v = obj[p];
-                str.push((v !== null && typeof v === "object") ?
-                  this.serialize(v, k) :
-                  encodeURIComponent(k) + "=" + encodeURIComponent(v));
-              }
-            }
-            return str.join("&");
+        var linkElement = document.getElementById('link');
+        linkElement.className = 'link--visible';
+        linkElement.href = url;
+      },
+      serialize: function(obj, prefix) {
+        // remove empty and unset key-values
+        Object.keys(obj).forEach(function(key) {
+          var value = obj[key];
+          if (value === null || value === '') {
+            delete obj[key]
           }
-        },
-        computed: {
-          computedOutboundDepartureTime: {
-            get() {
-              return this.toISO(this.outboundDepartureTime);
-            },
-            set(newVal) {
-              this.outboundDepartureTime = new Date(newVal);
-            }
-          },
-          computedOutboundArrivalTime: {
-            get() {
-              //this function will determine what is displayed in the input
-              return this.toISO(this.outboundArrivalTime);
-            },
-            set(newVal) {
-              //this function will run whenever the input changes
-              this.outboundArrivalTime = new Date(newVal);
-            }
+        })
+
+        var str = [],
+                p;
+        for (p in obj) {
+          if (obj.hasOwnProperty(p)) {
+            var k = prefix ? prefix + "[" + p + "]" : p,
+                    v = obj[p];
+            str.push((v !== null && typeof v === "object") ?
+                    this.serialize(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
           }
         }
-      })
-    </script>
+        return str.join("&");
+      }
+    },
+    computed: {
+      computedOutboundDepartureTime: {
+        get() {
+          return this.toISO(this.outboundDepartureTime);
+        },
+        set(newVal) {
+          this.outboundDepartureTime = new Date(newVal);
+        }
+      },
+      computedOutboundArrivalTime: {
+        get() {
+          //this function will determine what is displayed in the input
+          return this.toISO(this.outboundArrivalTime);
+        },
+        set(newVal) {
+          //this function will run whenever the input changes
+          this.outboundArrivalTime = new Date(newVal);
+        }
+      }
+    }
+  })
+</script>
 </body>
 </html>
